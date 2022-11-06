@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import jwt from "@fastify/jwt";
 import { z } from "zod";
 import { PrismaClient } from "@prisma/client";
 import ShortUniqueId from "short-unique-id";
@@ -16,6 +17,11 @@ async function bootstrap() {
 
   await fastify.register(cors, {
     origin: true,
+  });
+
+  // Em produção a variavel abaixo precisa estar guardado em uma .env
+  await fastify.register(jwt, {
+    secret: "nlwcopa",
   });
 
   await fastify.register(poolRoutes);
